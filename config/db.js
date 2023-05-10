@@ -7,5 +7,4 @@ const connectDB = (URI) => {
   });
 };
 
-
-module.exports = connectDB
+module.exports = connectDB;

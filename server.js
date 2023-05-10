@@ -1,16 +1,18 @@
-/* eslint-disable import/newline-after-import */
-/* eslint-disable no-console */
 const express = require("express");
 require("dotenv").config();
 const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
-const path = require("path");
 
-app.use(express.json());
 const PORT = process.env.PORT || 5000;
+app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
+
+const authRoutes = require("./routes/authRoutes");
+
+app.use("/api/v1/", authRoutes);
+
 const connectDB = require("./config/db");
 connectDB(process.env.MONGO_URI);
 

@@ -1,8 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
-const crypto = require("crypto");
-const User = require("../models/authModel");
+const User = require("../models/userModel");
 
 const jwtSecret = process.env.JWT_SECRET;
 
@@ -29,7 +28,7 @@ const register = asyncHandler(async (req, res) => {
     lastName,
     email,
     password: hashedPassword,
-  });
+  }).select('-password');
 
   //Extracting user details without the password
   const { password: pw, ...userDetails } = _doc;
@@ -40,7 +39,7 @@ const register = asyncHandler(async (req, res) => {
       id: userDetails._id,
     },
     jwtSecret,
-    { expiresIn: "1d" }
+    { expiresIn: "1d" },
   );
 
   res.status(201).json({
@@ -70,14 +69,13 @@ const login = asyncHandler(async (req, res) => {
       id: foundUser._id,
     },
     jwtSecret,
-    { expiresIn: "1d" }
+    { expiresIn: "1d" },
   );
 
   const user = {
     email: foundUser.email,
     firstName: foundUser.firstName,
     lastName: foundUser.lastName,
-    userId: foundUser._id,
   };
 
   res.status(200).json({ ...user, token });

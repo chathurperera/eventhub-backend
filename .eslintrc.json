@@ -14,7 +14,9 @@
     "consistent-return": "off",
     "quotes": "off",
     "no-underscore-dangle": "off",
-    "spaced-comment": "off"
+    "spaced-comment": "off",
+    "import/newline-after-import": "off",
+    "no-console": "off",
+    "eol-last": "off"
   }
 }
-

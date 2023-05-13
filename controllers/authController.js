@@ -64,7 +64,7 @@ const login = asyncHandler(async (req, res) => {
   }
 
   //Generating the token
-  const token = jwt.sign(
+  const accessToken = jwt.sign(
     {
       id: foundUser._id,
     },
@@ -78,7 +78,7 @@ const login = asyncHandler(async (req, res) => {
     lastName: foundUser.lastName,
   };
 
-  res.status(200).json({ ...user, token });
+  res.status(200).json({ ...user, accessToken });
 });
 
 module.exports = {

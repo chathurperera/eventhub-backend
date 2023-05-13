@@ -28,13 +28,13 @@ const register = asyncHandler(async (req, res) => {
     lastName,
     email,
     password: hashedPassword,
-  }).select('-password');
+  });
 
   //Extracting user details without the password
   const { password: pw, ...userDetails } = _doc;
 
   //Generating the token
-  const token = jwt.sign(
+  const accessToken = jwt.sign(
     {
       id: userDetails._id,
     },
@@ -44,7 +44,7 @@ const register = asyncHandler(async (req, res) => {
 
   res.status(201).json({
     ...userDetails,
-    token,
+    accessToken,
   });
 });
 

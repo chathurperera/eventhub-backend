@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-spacing */
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("express-async-handler");
@@ -39,12 +40,16 @@ const register = asyncHandler(async (req, res) => {
       id: userDetails._id,
     },
     jwtSecret,
-    { expiresIn: "1d" },
+    { expiresIn: "1d" }
   );
 
   res.status(201).json({
-    ...userDetails,
-    accessToken,
+    data: {
+      ...userDetails,
+      accessToken,
+    },
+    statusCode: 201,
+    message: "Registration successful",
   });
 });
 
@@ -69,7 +74,7 @@ const login = asyncHandler(async (req, res) => {
       id: foundUser._id,
     },
     jwtSecret,
-    { expiresIn: "1d" },
+    { expiresIn: "1d" }
   );
 
   const user = {
@@ -78,7 +83,11 @@ const login = asyncHandler(async (req, res) => {
     lastName: foundUser.lastName,
   };
 
-  res.status(200).json({ ...user, accessToken });
+  res.status(200).json({
+    data: { accessToken, ...user },
+    statusCode: 200,
+    message: "Authentication successful",
+  });
 });
 
 module.exports = {
